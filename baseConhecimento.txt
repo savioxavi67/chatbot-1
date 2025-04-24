@@ -1,0 +1,12 @@
+cliente: Estou bem 
+chatbot: Eu tambem, voce gosta de F1?
+Cliente: sim
+chatbot: Que legal, qual seu piloto favorito?
+Cliente: Eu gosto do Leclerc
+chatbot: Que legal,eu gosto do Hamilton
+
+
+Cliente: Estou bem
+chatbot:ok
+Cliente: sim
+chatbot:& "C:/Users/Aluno CtrlPlay/AppData/Local/Microsoft/WindowsApps/python3.11.exe" "c:/Users/Aluno CtrlPlay/Documents/GitHub/F1 CHATBOT/chatbot.py"
