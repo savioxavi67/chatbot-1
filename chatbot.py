@@ -1,42 +1,45 @@
-def saudacoes(nome):
+def saudacoesGUI(nome):
     import random
     frases = ["Bom dia , meu nome é" +nome+"Como vai você hoje?" , "tudo bem?"]
     print(frases[random.randint(0,2)])
 
-def recebetexto():
-    texto = "Cliente: "+input("Cliente: ")
-    palavrasProibidas = ["idiota", "paspalho", "bocó"]
-    for p in palavrasProibidas:
-        if p in texto:
-            print("olha a boquinha")
-            return recebetexto()
-    return texto
-def buscaResposta(nome, texto):
+def salvasugestao(sugestao):
+    with open ("baseconhecimento.txt", "a+") as conhecimento:
+        conhecimento.write("Chatbot:",+ sugestao+"\n")    
+
+def buscaRespostaGUI(texto):
     with open("baseConhecimento.txt", "a+") as conhecimento:
         conhecimento.seek(0)
         while True:
             viu = conhecimento.readline()
             if viu != "":
-                if  texto.replace("Cliente:","")=="tchau":
-                    print(nome+"; volte sempre")
-                    return "fim"
-                elif viu.strip() == texto.strip():
-                    proximalinha= conhecimento.readline()
-                    if "chatbot:" in proximalinha:
-                        return proximalinha 
+               if jaccard(texto,viu) > 0.3:
+                   proximaLinha = conhecimento.readline()
+                   if "Chatbot:" in proximaLinha:
+                       return proximaLinha
             else:
-                print("Não sei responder a pergunta")
-                conhecimento.write("\n" + texto)
-                respostaEsperado = input("Oque esperava? \n")
-                conhecimento.write("\n" + "chatbot:"+ respostaEsperado)
-                return "obrigado" 
+                       conhecimento.write('\n' + texto)
+                       return"me desculpe,nao sei oque falar"
+def jaccard(textoUsuario,textobase):
+    textoUsuario = limpaFrase(textoUsuario)
+    textobase = limpaFrase(textobase)
+    if len(textobase)< 1: return 0
+    else:
+        palavrasEmComum=0
+        for palavra in textoUsuario.split():
+            if palavra in textobase.split():
+                palavrasEmComum =+1
+                return palavrasEmComum/(len(textobase.split()))
             
-def exibeResposta(resposta,nome):
-    print(resposta.replace("chatbot", nome))
-    if resposta == "fim":
-        return "fim"
-    return "continua"           
-
+def limpaFrase(Frase):
+    tirar = ["?","!","...",".",",",":","Cliente:","\n"]
+    for t in tirar:
+        Frase = Frase.replace(t,"")
+    Frase = Frase.upper()
+    return Frase
+            
+def exibeRespostaGUI(texto,resposta,nome):
+    return resposta.replace("ChatBot",nome)
                            
 
     
